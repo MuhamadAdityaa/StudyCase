@@ -1,41 +1,38 @@
 <?php
 
 /*
-    Program ini menentukan jenis beasiswa yang diterima mahasiswa berdasarkan beberapa kriteria:
-    1. IPK harus di atas 2.75 agar masuk ke tahapan evaluasi.
-    2. Pengecekan penghasilan orang tua jika di bawah 10 juta masuk ke tahap evaluasi lebih lanjut.
-    3. Jika prestasi nasional atau internasional, maka mendapatkan beasiswa penuh.
-    4. Jika prestasi daerah dan aktif organisasi, maka mendapatkan beasiswa penuh.
+    Dalam sebuah machine learning ada yang dinamakan accuracy prediksi, accuracy prediksi memiliki 2 jenis:
+    1. accuracy pada data latih.
+    2. accuracy pada data test.
+
+    Ada juga istilah overfitting dan underfitting, kedua istilah tersebut memiliki arti 
+    bahwa machine learning tersebut memiliki peforma yang kurang baik.
+    1. overfitting adalah ketika accuracy data latih tinggi tetapi accuracy pada data test jauh lebih rendah.
+    2. underfitting adalah ketika accuracy data latih dan data test rendah.
+
+    Ada juga kondisi yang jarang terjadi, kondisi tersebut adalah ketika 
+    accuracy data latih rendah tapi accuracy di data test tinggi,
+    penyebab hal tersebut adalah karna data yang kurang stabil.
+
+
+    Program ini akan melakukan check apakah machine learning dalam keadaan yang baik, overfitting, underfitting, atau data kurang stabil
 */
 
-$ipk = 3.8;
-$penghasilan = 4.5;
-$prestasi = "nasional"; // pilihan: "tidak ada", "daerah", "nasional", "internasional"
-$aktifOrganisasi = true;
+$acc_latih = 89; // Memiliki range dari 0-100
+$acc_test = 90; // Memiliki range dari 0-100
 
-// Pengecekan IPK
-if ($ipk >= 2.75) {
-
-    // Pengecekan penghasilan orang tua
-    if ($penghasilan <= 10) {
-
-        // Pengecekan prestasi
-        if ($prestasi == "nasional" || $prestasi == "internasional") {
-            echo "Beasiswa Penuh";
-        } else {
-
-            // Pengecekan prestasi daerah dan keaktifan organisasi
-            if ($prestasi == "daerah" && $aktifOrganisasi) {
-                echo "Beasiswa Penuh (berkat prestasi dan aktif organisasi)";
-            } else {
-                echo "Beasiswa Parsial";
-            }
-        }
+// Nested if untuk mengklasifikasi keadaan machine learning
+if ($acc_latih > 80){
+    if ($acc_test >= $acc_latih - 3){
+        echo "Machine learning kamu BAIK";
     } else {
-        echo "Beasiswa Parsial";
+        echo "Machine learning kamu OVERFITTING";
     }
 } else {
-    echo "Tidak memenuhi syarat beasiswa (IPK rendah)";
+    if ($acc_test > $acc_latih + 20){
+        echo "Data kamu kurang stabil nih";
+    } else {
+        echo "Machine learning kamu UNDERFITTING";
+    }
 }
-
 ?>
